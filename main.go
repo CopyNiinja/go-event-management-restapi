@@ -16,6 +16,7 @@ func main() {
 
    //endpoints
 	r.GET("/events",getAllEvents)
+    r.POST("/events",createEvent)
 
 	//port
 	var port  = 8080;
@@ -35,4 +36,30 @@ func getAllEvents(c *gin.Context){
   c.JSON(http.StatusOK,gin.H{
 	"events":events,
   })
+}
+
+func createEvent(c *gin.Context){
+  var event models.Event;
+  //binding event with request body
+  if  err:=c.ShouldBindJSON(&event);err!=nil{
+	//error response
+	c.JSON(http.StatusBadRequest,gin.H{
+		"message":"Failed to parse Request",
+	})
+
+  }else{
+   //successfully parsing body
+   //saving the event to db   
+   event.Save();
+    
+    //dummy data
+    event.ID=1
+	event.UserID=100
+   //response
+   c.JSON(http.StatusCreated,gin.H{
+	"message":"Event created successfully",
+	"event":event,
+   })
+  }
+
 }

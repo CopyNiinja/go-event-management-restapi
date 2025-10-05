@@ -1,0 +1,9 @@
+POST http://localhost:8080/events
+content-type:application/json
+
+{
+    "title":"dummy event title",
+    "description":"description of the event",
+    "location":"location dsdsdsd",
+    "date":"2025-05-01T15:30:40.000Z"
+}
