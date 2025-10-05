@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/copyniinja/go-event-management-restapi/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,7 +14,7 @@ func main() {
 	// Create a Gin router with default middleware (logger and recovery)
 	r:=gin.Default()
 
-	//endpoints
+   //endpoints
 	r.GET("/events",getAllEvents)
 
 	//port
@@ -27,7 +28,11 @@ func main() {
 }
 
 func getAllEvents(c *gin.Context){
+  //Get all events
+  events:=models.GetAllEvents()
+
+  //JSON response
   c.JSON(http.StatusOK,gin.H{
-	"events":[]string{"event1"},
+	"events":events,
   })
 }
