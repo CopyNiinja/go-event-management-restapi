@@ -2,8 +2,8 @@ POST http://localhost:8080/events
 content-type:application/json
 
 {
-    "title":"dummy event title",
+    "title":"event 2",
     "description":"description of the event",
-    "location":"location dsdsdsd",
+    "location":"chittagong,bangladesh",
     "date":"2025-05-01T15:30:40.000Z"
 }
