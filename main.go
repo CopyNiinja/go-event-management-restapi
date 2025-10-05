@@ -5,12 +5,15 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/copyniinja/go-event-management-restapi/db"
 	"github.com/copyniinja/go-event-management-restapi/models"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	 
+	//DB
+	db.InitDB()
+
 	// Create a Gin router with default middleware (logger and recovery)
 	r:=gin.Default()
 
