@@ -52,12 +52,20 @@ func createEvent(c *gin.Context){
 
   }else{
    //successfully parsing body
-   //saving the event to db   
-   event.Save();
+     
+   //dummy user id
+    event.UserID=100
+
+   //saving the event to db  
+    err:=event.Save();
+	if err!=nil{
+		c.JSON(http.StatusBadRequest,gin.H{
+	"message":"Failed to create event",
+	
+   })
+	}
     
-    //dummy data
-    event.ID=1
-	event.UserID=100
+	
    //response
    c.JSON(http.StatusCreated,gin.H{
 	"message":"Event created successfully",
