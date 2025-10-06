@@ -28,6 +28,7 @@ func main() {
 
     //routes
 	 routes.EventRoutes(r,version); 
+	 routes.AuthRoutes(r,version); 
 
 	
 

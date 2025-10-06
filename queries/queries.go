@@ -2,11 +2,14 @@
 package queries
 
 const (
+	//users
 	CreateUserTable=`CREATE TABLE IF NOT EXISTS users(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	email TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL
 	)`
+    InsertUser = `INSERT INTO users(email,password) VALUES(?,?)`
+	//events
 	CreateEventsTable=`CREATE TABLE IF NOT EXISTS events(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	title TEXT NOT NULL ,
