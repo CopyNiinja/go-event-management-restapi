@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/copyniinja/go-event-management-restapi/queries"
 	_ "github.com/mattn/go-sqlite3" // this driver is used under the hood by database/sql
 )
 
@@ -30,19 +31,13 @@ func InitDB(){
 
 //create table function
 func createTable(){
- 
-//query
- createTableQuery:=`
-  CREATE TABLE IF NOT EXISTS events (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT NOT NULL,
-  description TEXT NOT NULL,
-  location TEXT NOT NULL,
-  date DATETIME NOT NULL,
-  user_id INTEGER
-)`
-//executing the query
- if _,err:=DB.Exec(createTableQuery);err !=nil{
+ //creating user table
+  _,err:=DB.Exec(queries.CreateUserTable);
+  if err!=nil{
+    panic(fmt.Sprintf("Failed to create users table: %v", err))
+  }
+//creating events table
+ if _,err=DB.Exec(queries.CreateEventsTable);err !=nil{
 	panic(fmt.Sprintf("Failed to create events table: %v", err))
  }
 
