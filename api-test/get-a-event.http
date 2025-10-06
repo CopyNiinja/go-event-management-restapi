@@ -1,5 +1,6 @@
 @base_url = http://localhost:8080
-@id = 2
+@api_version= v1
+@id = 5
 
 ###
-GET {{base_url}}/events/{{id}}
+GET {{base_url}}/api/{{api_version}}/events/{{id}}

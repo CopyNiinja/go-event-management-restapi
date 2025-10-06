@@ -16,8 +16,6 @@ type Event struct {
 	UserID  int `json:"user_id"`
 }
 
-//database
-var events []Event=[]Event{};
 
 //save to database
 func (e Event) Save()error{
