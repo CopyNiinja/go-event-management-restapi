@@ -20,6 +20,8 @@ func EventRoutes(r *gin.Engine,version string) {
 	   events.POST("/",handlers.CreateEvent)
 	   //update an event by ID
 	   events.PUT("/:id",handlers.UpdateEventById)
+	   //delete an event by ID
+	   events.DELETE("/:id",handlers.DeleteEventById)
 	
 	}
 }

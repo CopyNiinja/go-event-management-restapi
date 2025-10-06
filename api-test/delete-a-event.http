@@ -1,0 +1,6 @@
+@base_url = http://localhost:8080
+@api_version= v1
+@id = 2
+
+###
+DELETE {{base_url}}/api/{{api_version}}/events/{{id}}

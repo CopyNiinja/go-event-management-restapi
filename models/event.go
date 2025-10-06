@@ -115,3 +115,23 @@ func GetEvent(id string)(*Event,error){
 
 
 }
+
+//Delete event
+func DeleteEvent(id string)error{
+
+   //prepare the query 
+   stmt,err:=db.DB.Prepare(queries.DeleteEvent)
+
+   //handling error
+   if err!=nil {
+      return err
+   }
+   defer stmt.Close()
+   
+   //executing the query
+   //Parameter : id 
+   _,err=stmt.Exec(id);
+
+   return err
+
+}

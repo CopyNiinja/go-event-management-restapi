@@ -132,3 +132,32 @@ func UpdateEventById(c *gin.Context){
 
 
 }
+
+//Delete an event by ID
+func DeleteEventById(c *gin.Context){
+  //get the id from params
+  id:=c.Param("id")
+  //query to get the event
+  _,err:= models.GetEvent(id)
+  //handling error
+  if err!=nil {
+    c.JSON(http.StatusBadRequest,gin.H{
+      "Message":"Failed to get the event"+err.Error(),
+    })
+    return
+  } 
+  //deleting the event
+  err= models.DeleteEvent(id);
+
+  if err!=nil {
+    c.JSON(http.StatusInternalServerError,gin.H{
+      "Message":"Failed to delete the event"+err.Error(),
+    })
+    return
+  } 
+  //JSON response after successfully deleting the event
+  c.JSON(http.StatusOK,gin.H{
+      "Message":"successfully deleted the event.",
+    })
+
+}
