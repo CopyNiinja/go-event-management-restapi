@@ -1,0 +1,5 @@
+@base_url = http://localhost:8080
+@id = 2
+
+###
+GET {{base_url}}/events/{{id}}

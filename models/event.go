@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/copyniinja/go-event-management-restapi/db"
+	"github.com/copyniinja/go-event-management-restapi/queries"
 )
 
 type Event struct {
@@ -18,13 +19,12 @@ type Event struct {
 //database
 var events []Event=[]Event{};
 
+//save to database
 func (e Event) Save()error{
    //saving into database
 
    //insert a event query
-   insertEventQuery:=`INSERT INTO events(title,description,location,date,user_id) VALUES(?,?,?,?,?)`
-
-   stmt,err:=db.DB.Prepare(insertEventQuery);  
+   stmt,err:=db.DB.Prepare(queries.InsertEvent);  
 
    //error
    if err !=nil{
@@ -35,7 +35,7 @@ func (e Event) Save()error{
    defer stmt.Close()
 
    //executing the query with parameters
-   result,err:=stmt.Exec(e.Title,e.Description,e.Location,e.Date,e.UserID) 
+   result,err:=stmt.Exec(e.Title,e.Description,e.Location,e.Date,e.UserID)  // Exec() -> to changes data Query() -> to query database(return rows) 
    
    if err !=nil{
 	return err
@@ -52,13 +52,13 @@ func (e Event) Save()error{
 
 }
 
+//get all events
 func GetAllEvents()[]Event{
    //ignored error for simplicity. (DO NOT TRY THIS AT HOME! XD)
-   //query for all events
-   getEventsQuery := `SELECT * from events`;
+   
 
    //get all the rows after execution the query
-   rows,_ :=db.DB.Query(getEventsQuery);
+   rows,_ :=db.DB.Query(queries.GetAllEvents);
    
    //closing the statement after finishing
    defer rows.Close();
@@ -76,4 +76,25 @@ func GetAllEvents()[]Event{
    }
    //return all the events
    return  events
+}
+
+//get event by id
+func GetEvent(id string)(*Event,error){
+    //event
+    var event Event;
+    
+    //get the row of the event from db 
+    row:= db.DB.QueryRow(queries.GetEventById,id);
+    
+    //scan all the row column value into event variable
+    err:=row.Scan(&event.ID,&event.Title,&event.Description,&event.Location,&event.Date,&event.UserID);
+    
+    //error handling
+    if err!=nil{
+      return nil,err
+    }
+    //returning the event
+    return &event,nil
+
+
 }

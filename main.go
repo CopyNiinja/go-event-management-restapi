@@ -20,6 +20,7 @@ func main() {
    //endpoints
 	r.GET("/events",getAllEvents)
     r.POST("/events",createEvent)
+	r.GET("/events/:id",getEventById) //dynamic event: to get a single event using id
 
 	//port
 	var port  = 8080;
@@ -31,6 +32,9 @@ func main() {
 	r.Run(":"+strconv.Itoa(port));
 }
 
+
+// getAllEvents handles GET /events requests.
+// It fetches all the events and returns JSON response
 func getAllEvents(c *gin.Context){
   //Get all events
   events:=models.GetAllEvents()
@@ -51,9 +55,9 @@ func createEvent(c *gin.Context){
 	})
 
   }else{
-   //successfully parsing body
+   //after successfully parsing body
      
-   //dummy user id
+   //dummy user id (TODO: Authentication,login ,sign up)
     event.UserID=100
 
    //saving the event to db  
@@ -66,11 +70,34 @@ func createEvent(c *gin.Context){
 	}
     
 	
-   //response
+   //JSON response
    c.JSON(http.StatusCreated,gin.H{
 	"message":"Event created successfully",
 	"event":event,
    })
   }
+
+}
+
+//get single event by id
+func getEventById(c *gin.Context){
+  //the id of the event from params
+  id := c.Param("id"); //events/1  -> id="1"
+   
+  //get the event 
+  event,err:=models.GetEvent(id);
+   
+  //handling error
+  if err!=nil{
+    c.JSON(http.StatusInternalServerError,gin.H{
+		"message":"Failed to get the event:"+err.Error(),
+	})
+	return
+  }
+  //JSON response after successfully getting the event
+  c.JSON(http.StatusOK,gin.H{
+	"message":"success",
+	"event":event,
+  })
 
 }
