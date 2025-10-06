@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/copyniinja/go-event-management-restapi/models"
 	"github.com/gin-gonic/gin"
@@ -74,5 +75,60 @@ func GetEventById(c *gin.Context){
 	"message":"success",
 	"event":event,
   })
+
+}
+
+//update an event by ID
+func UpdateEventById(c *gin.Context){
+  //get the id from params
+  id:=c.Param("id")
+  //query to get the event
+  staleEvent,err:= models.GetEvent(id)
+  //handling error
+  if err!=nil {
+    c.JSON(http.StatusBadRequest,gin.H{
+      "Message":"Failed to get the event"+err.Error(),
+    })
+    return
+  }
+   var updatedEvent models.Event; 
+  //get the updated event from body
+  err=c.ShouldBindJSON(&updatedEvent);
+
+  if err!=nil {
+    c.JSON(http.StatusBadRequest,gin.H{
+      "Message":"Failed to parse the event "+err.Error(),
+    })
+   return
+  }
+
+  //set the id,userID of the event in updatedEvent
+  updatedEvent.UserID=staleEvent.UserID ;
+  updatedEvent.ID,err=strconv.ParseInt(id,10,64) ;
+  
+
+  if err!=nil {
+    c.JSON(http.StatusBadRequest,gin.H{
+      "Message":"Failed to parse the id "+err.Error(),
+    })
+    return
+  }
+
+  err=updatedEvent.Update()
+  //handling error while updating the db
+  if err!=nil {
+    c.JSON(http.StatusBadRequest,gin.H{
+      "Message":"Failed to update the event "+err.Error(),
+    })
+    return
+  }
+
+  ///JSON response for successfully updating the event
+  c.JSON(http.StatusOK,gin.H{
+    "message":"The event updated successfully",
+    "updatedEvent":updatedEvent,
+  })
+
+
 
 }

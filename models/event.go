@@ -50,6 +50,25 @@ func (e Event) Save()error{
 
 }
 
+//Update to database
+func (e Event) Update()error{
+   //prepare the queries (better for multiple uses)
+   stmt,err:= db.DB.Prepare(queries.UpdateEvent)
+   
+   if err!=nil {
+      return err
+   }
+
+   defer stmt.Close()
+   //executing the query
+   //Parameters: title=?, description=?, location=?, date=? , id=?
+   _,err=stmt.Exec(e.Title,e.Description,e.Location,e.Date,e.UserID)
+   
+   return err
+
+
+}
+
 //get all events
 func GetAllEvents()[]Event{
    //ignored error for simplicity. (DO NOT TRY THIS AT HOME! XD)

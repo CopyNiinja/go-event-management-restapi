@@ -1,0 +1,13 @@
+@api_version= v1
+@base_url = http://localhost:8080
+@id = 5
+###
+PUT {{base_url}}/api/{{api_version}}/events/{{id}}
+Content-Type: application/json
+
+{
+    "title":"Updated event 5",
+    "description":"updated!!!description of the event .!!!!",
+    "location":"Uttara,Dhaka,Bangladesh",
+    "date":"2024-04-01T15:50:44.000Z"
+}

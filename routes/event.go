@@ -16,8 +16,10 @@ func EventRoutes(r *gin.Engine,version string) {
 	   events.GET("/:id",handlers.GetEventById)
 	   //get all events 
 	   events.GET("/",handlers.GetAllEvents)
-	   //create a event
+	   //create an event
 	   events.POST("/",handlers.CreateEvent)
+	   //update an event by ID
+	   events.PUT("/:id",handlers.UpdateEventById)
 	
 	}
 }
