@@ -16,7 +16,7 @@ func AuthRoutes(r *gin.Engine,version string) {
 	   //sign up
 	   user.POST("/signup",handlers.SignupHandler)
 	   //login
-	   user.POST("/login")
+	   user.POST("/login",handlers.LoginHandler)
 
 	}
 

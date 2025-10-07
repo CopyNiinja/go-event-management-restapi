@@ -36,3 +36,17 @@ func (u User) Save()error{
 	return err
 
 }
+
+//GetuserById takes an argument email and return the user if its a registered user or error if not
+func GetUserByEmail(email string)(*User,error){
+ //database query
+  row:= db.DB.QueryRow(queries.GetUserByEmail,email);
+  var user User
+  //scanning the row to get the user details arg ID,Email,Password
+  err:=row.Scan(&user.ID,&user.Email,&user.Password);
+
+ if err!=nil{
+	return nil,err
+ }
+ return &user,nil
+} 

@@ -9,6 +9,7 @@ const (
 	password TEXT NOT NULL
 	)`
     InsertUser = `INSERT INTO users(email,password) VALUES(?,?)`
+	GetUserByEmail = `SELECT * FROM users WHERE email=?`
 	//events
 	CreateEventsTable=`CREATE TABLE IF NOT EXISTS events(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
