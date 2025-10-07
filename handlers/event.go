@@ -34,8 +34,12 @@ func CreateEvent(c *gin.Context){
   }else{
    //after successfully parsing body
      
-   //dummy user id (TODO: Authentication,login ,sign up)
-    event.UserID=100
+  //  //dummy user id ( Authentication,login ,sign up)
+  //   event.UserID=100
+    id,_:=c.Get("id")
+    //any type
+    idVal := id.(int64)
+    event.UserID=idVal
 
    //saving the event to db  
     err:=event.Save();

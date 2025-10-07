@@ -4,10 +4,11 @@
 ###
 POST {{base_url}}/api/{{api_version}}/events
 content-type:application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InExQGdtYWlsLmNvbSIsImV4cCI6MTc1OTg0NDYyMywiaWQiOjJ9.xo_p16sQvbUvnF1NTW839Oxv1QtidwX0xukQBRZCvPA
 
 {
-    "title":"event JS",
-    "description":"description of the event .!!!!",
+    "title":"event JS 5",
+    "description":" s description of the event .!!!!",
     "location":"Dhaka,Bangladesh",
-    "date":"2024-03-01T15:50:44.000Z"
+    "date":"2024-03-02T15:50:44.000Z"
 }

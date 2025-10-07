@@ -13,12 +13,12 @@ type Event struct {
 	Description string `binding:"required"`
 	Location    string `binding:"required"`
 	Date        time.Time `json:"date" binding:"required"`
-	UserID  int `json:"user_id"`
+	UserID  int64 `json:"user_id"`
 }
 
 
 //save to database
-func (e Event) Save()error{
+func (e *Event) Save()error{
    //saving into database
 
    //insert a event query

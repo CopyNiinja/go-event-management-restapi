@@ -28,7 +28,7 @@ func Authorization(c *gin.Context) {
    if err!=nil{
 	//In middleware using gin,Need to Abort ,otherwise response will be send from next middlewares 
 	c.AbortWithStatusJSON(http.StatusUnauthorized,gin.H{
-		"message":"Unauthorized access.please login",
+		"message":"Unauthorized access.please login"+err.Error(),
 	})
 	return
    }
