@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -30,7 +29,7 @@ func GenerateToken(userID int64,email string)(string,error) {
 }
 
 //VerifyToken func takes the JWT token and verifies it 
-func VerifyToken(token string)error{
+func VerifyToken(token string)(int64,error){
 	//parsing
    parsedToken,err:= jwt.Parse(token,func(token *jwt.Token)(interface{},error){ 
 		
@@ -42,23 +41,23 @@ func VerifyToken(token string)error{
 
 	//error handling
 	if err!=nil{
-		return err
+		return 0,err
 	} 
 	//check if the token is invalid
 	if !parsedToken.Valid{
-		return errors.New("invalid token")
+		return 0,errors.New("invalid token")
 	}
 	//check the token claims is valid 
 	 claims,ok:=parsedToken.Claims.(jwt.MapClaims)
 
 	 if !ok{
-		return errors.New("invalid token")
+		return 0,errors.New("invalid token")
 	 }
      //by default it was any type.thats why type checking
-	 email,_:=claims["email"].(string)
+	//  email,_:=claims["email"].(string)
 	 id:=int64(claims["id"].(float64)) //!! float64 auto converted by Claim store and retrieve process
      
-	 fmt.Println(email,id);
-	return nil
+	
+	return id,nil
 
 }

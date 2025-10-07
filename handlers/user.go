@@ -71,18 +71,28 @@ func LoginHandler(c *gin.Context){
   //if the user id exists in registered user list
   //comparing the password
   if utils.CheckPasswordHash(user.Password,fetchedUser.Password) {
-    //successfully login TODO: JWT implementation
-       
-    //dummy: TODO: remove this code!
+    //successfully login 
+     token,err:= utils.GenerateToken(fetchedUser.ID,fetchedUser.Email);
+
+     if err!=nil{
+      c.JSON(http.StatusInternalServerError,gin.H{
+      "message":"Failed to generate jwt token"+err.Error(),
+    })
+     }
+     //setting token to the response header
+     c.Header("Authorization","Bearer "+token)
+        
+     //JSON response
      c.JSON(http.StatusOK,gin.H{
       "message":"Successfully logged In.",
+      "token:":token,
     })
-   return
+ 
 
   } else{
     //wrong credentials
      c.JSON(http.StatusUnauthorized,gin.H{
-      "message":"Failed to login:wrong credentials"+err.Error(),
+      "message":"Failed to login:wrong credentials",
     })
    return
   }
