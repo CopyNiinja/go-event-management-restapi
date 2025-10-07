@@ -2,7 +2,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/copyniinja/go-event-management-restapi/models"
@@ -61,7 +60,7 @@ func LoginHandler(c *gin.Context){
 
   //checking the user is a valid registered user
   fetchedUser,err:=models.GetUserByEmail(user.Email);
-   fmt.Println(user,"f:",fetchedUser)
+   
   //handling wrong credentials error
   if err!=nil{
     c.JSON(http.StatusUnauthorized,gin.H{
@@ -73,7 +72,7 @@ func LoginHandler(c *gin.Context){
   //comparing the password
   if utils.CheckPasswordHash(user.Password,fetchedUser.Password) {
     //successfully login TODO: JWT implementation
-
+       
     //dummy: TODO: remove this code!
      c.JSON(http.StatusOK,gin.H{
       "message":"Successfully logged In.",
