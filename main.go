@@ -14,25 +14,22 @@ func main() {
 	db.InitDB()
 
 	//port
-	var port  = 8080;
-	flag.IntVar(&port,"port",port,"server port number");
-    
+	var port = 8080
+	flag.IntVar(&port, "port", port, "server port number")
+
 	//version of api
-	var version string;
-	flag.StringVar(&version,"v","v1","the version of api endpoint")
-    //parsing the flag
+	var version string
+	flag.StringVar(&version, "v", "v1", "the version of api endpoint")
+	//parsing the flag
 	flag.Parse()
 
 	// Create a Gin router with default middleware (logger and recovery)
-	r:=gin.Default()
+	r := gin.Default()
 
-    //routes
-	 routes.EventRoutes(r,version); 
-	 routes.AuthRoutes(r,version); 
-
-	
+	//routes
+	routes.EventRoutes(r, version)
+	routes.AuthRoutes(r, version)
 
 	//run and listening the server
-	r.Run(":"+strconv.Itoa(port));
+	r.Run(":" + strconv.Itoa(port))
 }
-
