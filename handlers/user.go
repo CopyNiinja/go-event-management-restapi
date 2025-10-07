@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/copyniinja/go-event-management-restapi/models"
+	"github.com/copyniinja/go-event-management-restapi/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,6 +23,18 @@ func SignupHandler(c *gin.Context){
 	})
 	return
    }
+   //hashing the password
+   hashedPassword,err:= utils.HashPassword(user.Password);
+
+   //handling error occurred in hashing password
+   if err!=nil{
+    c.JSON(http.StatusInternalServerError,gin.H{
+		"message":"Failed to hash user password:"+err.Error(),
+	})
+   }
+   //rewriting the user raw password into hashed password
+   user.Password=hashedPassword;
+  
    //saving user to database
    err=user.Save()
 
